@@ -25,7 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-INCLUDEPATH += /usr/include/opencv
+INCLUDEPATH += <OpenCV installation directory here>
 
 SOURCES += \
         main.cpp \
@@ -38,7 +38,7 @@ HEADERS += \
 
 FORMS +=
 
-LIBS += -L"/usr/include/opencv" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio
+LIBS += -L"<OpenCV installation directory here>" -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
