@@ -28,6 +28,13 @@ void VideoFrame::updateFeed()
         applyEffects();
         imshow(FEED_WINDOW_NAME, frame);
         imshow(ORIGINAL_FEED_WINDOW_NAME, originalFrame);
+        if (isRecording)
+        {
+            output.write(frame);
+            setWindowTitle(FEED_WINDOW_NAME, FEED_WINDOW_NAME +  "- Recording");
+        }
+        else
+            setWindowTitle(FEED_WINDOW_NAME, FEED_WINDOW_NAME);
     }
 }
 
@@ -132,6 +139,29 @@ void VideoFrame::verticalMirror()
     else isMirroredV = true;
 }
 
+void VideoFrame::saveVideo()
+{
+    Dialog *popup = new Dialog();
+    if (timesRotated > 0 || timesResized > 0)
+    {
+        popup->showMessage("Rotation and resizing not supported during recording of videos.");
+        timesRotated = 0;
+        timesResized = 0;
+    }
+
+    if (!isRecording)
+    {
+        QString fileName = popup->readUserInput();
+        fileName += ".avi";
+        output.open(fileName.toStdString(), CV_FOURCC('M', 'J', 'P', 'G'), 30, Size(frame.cols, frame.rows));
+        isRecording = true;
+    }
+    else
+    {
+        output.release();
+        isRecording = false;
+    }
+}
 
 // Modules to apply all valid operations
 void VideoFrame::applyEffects()
@@ -186,6 +216,7 @@ void VideoFrame::applyGradient()
 {
     Mat gradients;
     Sobel(frame, gradients, CV_8U, 1, 1, 3);
+    gradients.convertTo(gradients, -1, 1, 127);
     frame = gradients;
 }
 
@@ -261,6 +292,7 @@ VideoFrame::VideoFrame(int camera)
     isGrayscale = false;
     isMirroredH = false;
     isMirroredV = false;
+    isRecording = false;
     timesRotated = 0;
     timesResized = 0;
 }
