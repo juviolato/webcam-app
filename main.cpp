@@ -32,6 +32,7 @@ int main(int argc, char** argv)
     menu->addButton("Rotate 90º", feed, &VideoFrame::rotate90Degrees);
     menu->addButton("Horizontal Mirror", feed, &VideoFrame::horizontalMirror);
     menu->addButton("Vertical Mirror", feed, &VideoFrame::verticalMirror);
+    menu->addButton("Start/Stop Recording", feed, &VideoFrame::saveVideo);
     menu->display();
 
     // Calls feed.updateFeed() repeatedly according to the defined wait time
