@@ -41,7 +41,7 @@ class VideoFrame: public QObject
 private:
     Mat frame, originalFrame;
     VideoCapture source;
-    bool isBlurred, detectedEdges, isGradient, brightnessAdjusted, contrastAdjusted, isNegative, isGrayscale, isMirroredH, isMirroredV;
+    bool isBlurred, detectedEdges, isGradient, brightnessAdjusted, contrastAdjusted, isNegative, isGrayscale, isMirroredH, isMirroredV, isRecording;
     int kernelSize, bias, timesRotated, timesResized;
     double gain;
 
